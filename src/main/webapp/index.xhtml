@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Kalkulator kredytowy</title>
+</h:head>
+
+<h:body>
+    <h1>Kalkulator kredytowy</h1>
+    <h:form id="calcForm">
+        <p>
+            Kwota kredytu:
+            <h:inputText value="#{kredytBB.kwota}" />
+        </p>
+        <p>
+            Liczba lat:
+            <h:inputText value="#{kredytBB.lata}" />
+        </p>
+        <p>
+            Oprocentowanie (%):
+            <h:inputText value="#{kredytBB.procent}" />
+        </p>
+        <p>
+            <h:commandButton value="Oblicz"
+                             action="#{kredytBB.calc()}" />
+        </p>
+        <p>
+            <h:commandButton value="Dodaj (AJAX)" action="#{kredytBB.calc_AJAX()}">
+            <f:ajax execute="@form" render="msgs" />
+            </h:commandButton>
+        </p>
+        <h:messages id="msgs" showDetail="true" />
+    </h:form>
+
+</h:body>
+</html>
