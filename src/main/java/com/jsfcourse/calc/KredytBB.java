@@ -1,25 +1,20 @@
 package com.jsfcourse.calc;
 
-import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 
 @Named
 @RequestScoped
-//@SessionScoped
 public class KredytBB {
-
 
     private String kwota;
     private String lata;
     private String procent;
     private Double result;
 
-    @Inject
-    FacesContext ctx;
+    private FacesContext ctx = FacesContext.getCurrentInstance();
 
     public String getKwota() { return kwota; }
     public void setKwota(String kwota) { this.kwota = kwota; }
@@ -32,7 +27,6 @@ public class KredytBB {
 
     public Double getResult() { return result; }
     public void setResult(Double result) { this.result = result; }
-
 
     private boolean doTheMath() {
         try {
@@ -57,7 +51,6 @@ public class KredytBB {
             return false;
         }
     }
-
     public String calc() {
         if (doTheMath()) {
             ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -68,9 +61,8 @@ public class KredytBB {
     }
     public String calc_AJAX() {
         if (doTheMath()) {
-            String formattedResult = String.format("%.2f", result);
             ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Wynik (rata): " + formattedResult + " zł", null));
+                    "Wynik (rata): " + String.format("%.2f", result) + " zł", null));
         }
         return null;
     }
