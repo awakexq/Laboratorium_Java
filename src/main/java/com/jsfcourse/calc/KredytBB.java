@@ -1,5 +1,4 @@
 package com.jsfcourse.calc;
-
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
@@ -9,30 +8,28 @@ import jakarta.faces.context.FacesContext;
 @RequestScoped
 public class KredytBB {
 
-    private String kwota;
-    private String lata;
-    private String procent;
+    private Double kwota;
+    private Integer lata;
+    private Double procent;
     private Double result;
 
-    private FacesContext ctx = FacesContext.getCurrentInstance();
+    public Double getKwota() { return kwota; }
+    public void setKwota(Double kwota) { this.kwota = kwota; }
 
-    public String getKwota() { return kwota; }
-    public void setKwota(String kwota) { this.kwota = kwota; }
+    public Integer getLata() { return lata; }
+    public void setLata(Integer lata) { this.lata = lata; }
 
-    public String getLata() { return lata; }
-    public void setLata(String lata) { this.lata = lata; }
-
-    public String getProcent() { return procent; }
-    public void setProcent(String procent) { this.procent = procent; }
+    public Double getProcent() { return procent; }
+    public void setProcent(Double procent) { this.procent = procent; }
 
     public Double getResult() { return result; }
     public void setResult(Double result) { this.result = result; }
 
     private boolean doTheMath() {
         try {
-            double kwotaVal = Double.parseDouble(this.kwota);
-            double lataVal = Double.parseDouble(this.lata);
-            double procentVal = Double.parseDouble(this.procent);
+            double kwotaVal = kwota;
+            double lataVal = lata;
+            double procentVal = procent;
 
             double n = lataVal * 12;
             if (procentVal == 0) {
@@ -41,32 +38,33 @@ public class KredytBB {
                 double p = (procentVal / 100) / 12;
                 result = kwotaVal * (p * Math.pow(1 + p, n)) / (Math.pow(1 + p, n) - 1);
             }
-
             result = Math.round(result * 100.0) / 100.0;
             return true;
 
         } catch (Exception e) {
-            ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Błąd podczas przetwarzania parametrów", null));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd przetwarzania parametrów", null));
             return false;
         }
     }
+
     public String calc() {
         if (doTheMath()) {
-            ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Operacja wykonana poprawnie", null));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacja wykonana poprawnie", null));
             return "showresult";
         }
         return null;
     }
+
     public String calc_AJAX() {
         if (doTheMath()) {
-            ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Wynik (rata): " + String.format("%.2f", result) + " zł", null));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            "Wynik (rata): " + String.format("%.2f", result) + " zł", null));
         }
         return null;
     }
-
     public String info() {
         return "info";
     }
