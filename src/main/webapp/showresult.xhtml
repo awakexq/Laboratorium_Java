@@ -3,24 +3,28 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-    <title>Wynik kalkulacji</title>
-</h:head>
+    <ui:define name="title">
+        Wynik kalkulacji
+    </ui:define>
 
-<h:body>
-    <h:form>
+    <ui:composition template="/templates/page-template.xhtml">
+        
+        <ui:define name="pageContent">
+            <h:form>
+                <p:panel header="Wynik kalkulacji kredytu" style="width:300px; margin:auto; text-align:center;">
+                    <h:panelGroup rendered="#{not empty kredytBB.result}">
+                        <p:outputLabel value="Rata miesięczna: " />
+                        <h:outputText value="#{kredytBB.result} zł" style="font-weight:bold; font-size:1.2em;" />
+                    </h:panelGroup>
+                </p:panel>
+                <p:messages showDetail="true" style="width:300px; margin:auto;" />
+                <p:commandButton value="Powrót" action="index" icon="pi pi-arrow-left" style="display:block; margin:auto;" />
 
-        <p:panel header="Wynik kalkulacji kredytu" style="width:300px; margin:auto; text-align:center;">
-            <h:panelGroup rendered="#{not empty kredytBB.result}">
-                <p:outputLabel value="Rata miesięczna: " />
-                <h:outputText value="#{kredytBB.result} zł" style="font-weight:bold; font-size:1.2em;" />
-            </h:panelGroup>
-        </p:panel>
-        <p:messages showDetail="true" style="width:300px; margin:auto;" />
-        <p:commandButton value="Powrót" action="index" icon="pi pi-arrow-left" style="display:block; margin:auto;" />
-
-    </h:form>
-</h:body>
+            </h:form>
+        </ui:define>
+        
+    </ui:composition>
 </html>
