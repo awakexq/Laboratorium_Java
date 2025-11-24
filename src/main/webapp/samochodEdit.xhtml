@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+    <f:metadata>
+        <f:viewAction action="#{samochodEditBB.onLoad()}" />
+    </f:metadata>
+
+    <h:head>
+        <meta charset="utf-8"/>
+        <title>Edycja samochodu</title>
+    </h:head>
+
+    <h:body style="background-color: #eee; margin: 0.5em;">
+
+        <p:panel toggleable="true" header="Edycja samochodu">
+
+            <h:form rendered="#{samochodEditBB.samochod != null}">
+                <h:panelGrid columns="3" cellpadding="5">
+
+                    <h:outputLabel for="s-marka" value="Marka:" />
+                    <p:inputText id="s-marka" value="#{samochodEditBB.samochod.marka}"
+                                 required="true" requiredMessage="Podaj markę" />
+                    <p:message for="s-marka" display="icon"/>
+
+                    <h:outputLabel for="s-model" value="Model:" />
+                    <p:inputText id="s-model" value="#{samochodEditBB.samochod.model}"
+                                 required="true" requiredMessage="Podaj model" />
+                    <p:message for="s-model" display="icon"/>
+
+                    <h:outputLabel for="s-rok" value="Rok:" />
+                    <p:inputText id="s-rok" value="#{samochodEditBB.samochod.rocznik}"
+                                 required="true" validatorMessage="Rok musi być liczbą">
+                        <f:validateLongRange minimum="1900" maximum="2050" />
+                    </p:inputText>
+                    <p:message for="s-rok" display="icon"/>
+<p:outputLabel for="t-typ" value="Typ silnika:" />
+<p:inputText id="t-typ" value="#{samochodEditBB.samochod.typSilnika}"
+             required="true" requiredMessage="Podaj typ silnika"
+             validatorMessage="Typ silnika może mieć max 11 znaków">
+    <f:validateLength maximum="11" />
+</p:inputText>      
+<p:message for="t-typ" display="icon"/>
+                    <h:outputLabel for="s-cena" value="Cena:" />
+                    <p:inputText id="s-cena" value="#{samochodEditBB.samochod.cenaZaDzien}"
+                                 required="true" validatorMessage="Podaj liczbę" />
+                    <p:message for="s-cena" display="icon"/>
+
+                    <h:outputLabel for="s-zdjecie" value="Link do zdjęcia:" />
+                    <p:inputText id="s-zdjecie"
+                                 value="#{samochodEditBB.samochod.zdjecie}"
+                                 required="true"
+                                 requiredMessage="Podaj URL do zdjęcia"/>
+                    <p:message for="s-zdjecie" display="icon"/>
+
+                </h:panelGrid>
+
+                <p:messages id="msgs" />
+
+                <p:commandButton value="Zapisz"
+                                 action="#{samochodEditBB.saveData()}"
+                                 style="margin-right: 1em;" update="@form" />
+
+                <p:button value="Anuluj" outcome="samochodList" />
+            </h:form>
+
+        </p:panel>
+
+    </h:body>
+
+</html>
